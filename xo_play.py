@@ -5,24 +5,28 @@ class Board:
     def __str__(self):
         rows = [self.PlatBoard[i:i + 3] for i in range(0, 9, 3)]
         board_str = ""
-        for row in rows:
+        for i, row in enumerate(rows):
             board_str += " | ".join(row) + "\n"
-            if row != rows[-1]:
-                board_str += "-+-" * 2 + "-\n"
+            if i < 2:
+                board_str += "- + - + -\n"
         return board_str
 
-    def make_move(self, player, place):
+    def make_move(self, marker, place):
         if self.PlatBoard[place] == '*':
-            print("המקום פנוי")
-            self.PlatBoard[place] = player.marker  # עדכון כאן למרקר של השחקן
+            self.PlatBoard[place] = marker
+            return True
         else:
-            print("המקום מלא")
+            print("המקום כבר תפוס, נסה שוב.")
+            return False
 
     def is_winner(self, marker):
-        win_conditions = [(0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 4, 8), (2, 4, 6), (0, 3, 6), (1, 4, 7), (2, 5, 8)]
+        win_conditions = [
+            (0, 1, 2), (3, 4, 5), (6, 7, 8),  # שורות
+            (0, 3, 6), (1, 4, 7), (2, 5, 8),  # עמודות
+            (0, 4, 8), (2, 4, 6)              # אלכסונים
+        ]
         for condition in win_conditions:
             if all(self.PlatBoard[i] == marker for i in condition):
-                print(f"wow!!!!! the winner is: {marker}")
                 return True
         return False
 

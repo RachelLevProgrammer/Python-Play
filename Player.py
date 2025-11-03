@@ -8,9 +8,8 @@ class Player:
             try:
                 move = int(input(f"{self.name}, הכנס מספר בין 1 ל-9: "))
                 if 1 <= move <= 9:
-                    return move
+                    return move - 1  
                 else:
                     print("הזן מספר בין 1 ל-9")
             except ValueError:
                 print("הזן מספר חוקי")
-
